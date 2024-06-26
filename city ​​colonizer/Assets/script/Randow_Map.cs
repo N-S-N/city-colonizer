@@ -115,18 +115,7 @@ public class Randow_Map : MonoBehaviour
             }
 
         }
-        /*
-        string mapstring = "";
-        for (int i = 0; i < lineMap.Count; i++)
-        {
-            for (int j = 0; j < MaxMap; j++)
-            {
-                mapstring +=  lineMap[i].Column[j].ToString() + " ";
-            }
-            mapstring += "\n";
-        }
-        texto.text = mapstring;
-        */
+      
     }
     #endregion
 
