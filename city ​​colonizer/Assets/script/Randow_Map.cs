@@ -5,6 +5,8 @@ using UnityEngine;
 public class Randow_Map : MonoBehaviour
 {
     #region variaves 
+    [Header("prefeb do terreno")]
+    [SerializeField] GameObject ociano, terra,objPai;
 
     [Header("angulo do terendo")]
     [SerializeField] int maximoDeIngloinacao;
@@ -97,6 +99,23 @@ public class Randow_Map : MonoBehaviour
             }
         }
 
+        for (int i = 0; i < lineMap.Count; i++)
+        {
+            for (int j = 0; j < MaxMap; j++)
+            {
+                GameObject spawm;
+                if (lineMap[i].Column[j] == 0)
+                {
+                    spawm = Instantiate(ociano,new Vector3(i , lineMap[i].Column[j],j),transform.rotation, objPai.transform);
+                }
+                else
+                {
+                    spawm = Instantiate(terra, new Vector3(i, lineMap[i].Column[j],j), transform.rotation, objPai.transform);
+                }
+            }
+
+        }
+        /*
         string mapstring = "";
         for (int i = 0; i < lineMap.Count; i++)
         {
@@ -107,6 +126,7 @@ public class Randow_Map : MonoBehaviour
             mapstring += "\n";
         }
         texto.text = mapstring;
+        */
     }
     #endregion
 
