@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 
@@ -15,75 +16,210 @@ public class Randow_Map : MonoBehaviour
     [SerializeField] float manter;
     [SerializeField] float subir;
     [SerializeField] float decer;
+    [SerializeField] int NivelDoDegrau ;
+
 
     [Header("tamanho do Map e lista do map de relevo")]
     [SerializeField] int MaxMap;
     public List<RandowMapInt> lineMap;
     [SerializeField] TMP_Text texto;
+
+    private int LevelAtual = 1;
+
     #endregion
 
     #region fucion
     private void Awake()
     {
         Line();
-        Randow();
-        confim();
-        mapping();
+        //RandowForLine();
+
+        RandowForLevel();
+
     }
     void Line()
     {
         subir += manter;
         decer += subir;
     }
-    void Randow()
+    void RandowForLine()
     {
-        for(int i = 0;i < MaxMap; i++)
+        for (int i = 0; i < MaxMap; i++)//pafez A Primeira linha
         {
             for (int j = 0; j < MaxMap; j++)
             {
-                if(j == 0)//prin]meira linha
+                if (j < 2)//prin]meira linha
+                {
+                    lineMap[i].Column[j] = 0;
+                }
+                else
+                {
+                    float Randow = Random.Range(0.000f, decer);
+                    //Debug.Log(Randow + " " + i);
+                    if (Randow <= manter)
+                    {
+                        lineMap[i].Column[j] = lineMap[i].Column[j - 1];
+                    }
+                    else if (Randow <= subir)
+                    {
+                        lineMap[i].Column[j] = lineMap[i].Column[j - 1] + 1;
+                    }
+                    else if (Randow <= decer)
+                    {
+                        if (lineMap[i].Column[j - 1] == 0)
+                        {
+                            lineMap[i].Column[j] = lineMap[i].Column[j - 1];
+                        }
+                        else
+                        {
+                            lineMap[i].Column[j] = lineMap[i].Column[j - 1] - 1;
+                        }
+                    }
+                }
+            }
+         
+        }
+        confim();
+        //colunas
+        /*
+        for (int i = 0; i < MaxMap; i++)//lionha
+        {
+            for (int j = 1; j < MaxMap; j++)//coluna
+            {
+                if (i < 2)//primeira linha
                 {
                     lineMap[i].Column[j] = 0;
                 }
                 else
                 {
                     float Randow = Random.Range(0.000f, 100.000f);
-                    //Debug.Log(Randow + " " + i);
-                    if (Randow <= manter)
+
+                    if (Randow <= manterColuna)
                     {
-                        lineMap[i].Column[j] = lineMap[i].Column[j - 1];   
+                        lineMap[j].Column[i] = lineMap[j - 1].Column[i];
                     }
-                    else if (Randow <= subir)
+                    else if (Randow <= decerColuna)
                     {
-                        lineMap[i].Column[j] = lineMap[i].Column[j - 1] + 1;                 
-                    }
-                    else if(Randow <= decer)
-                    {
-                        if (lineMap[i].Column[j-1] == 0)
+                        if (lineMap[j - 1].Column[i] == 0)
                         {
-                            lineMap[i].Column[j] = lineMap[i].Column[j - 1];
+                            lineMap[j].Column[i] = lineMap[j - 1].Column[i];
                         }
                         else
                         {
-                            lineMap[i].Column[j] = lineMap[i].Column[j - 1]-1;
+                            lineMap[j].Column[i] = lineMap[j - 1].Column[i] - 1;
                         }
                     }
+                    else
+                    {
+                        lineMap[j].Column[i] = lineMap[j - 1].Column[i] + 1;
+                    }
+
+                    confim(i, j);
                 }
             }
         }
+        */
     }
+
+    int colunaanteriou = 0;
+
+    void RandowForLevel()
+    {
+        int RandowLivel = Random.Range(1, NivelDoDegrau);
+        colunaanteriou += RandowLivel;
+        if (NivelDoDegrau + colunaanteriou < MaxMap)
+        {
+            lineMap[0].Column[colunaanteriou] = LevelAtual;
+
+            for (int j = 0; j < MaxMap - 1; j++)
+            {
+                float Randow = Random.Range(0.000f, 100.000f);
+
+                if (Randow <= manter)
+                {
+                    if (lineMap[j].Column[colunaanteriou] != 0)
+                    {
+                        colunaanteriou++;
+                        if (colunaanteriou < MaxMap)
+                        {
+                            lineMap[j].Column[colunaanteriou] = LevelAtual;
+                        }
+                    }
+                    else
+                    {
+                        if(colunaanteriou < MaxMap)
+                        {
+                            lineMap[j].Column[colunaanteriou] = LevelAtual;
+                        }
+                    }
+                }
+                else if (Randow <= subir)
+                {
+                    colunaanteriou++;
+                    if (colunaanteriou < MaxMap)
+                    {
+                        lineMap[j].Column[colunaanteriou] = LevelAtual;
+                    }
+                }
+                else
+                {
+                    if (colunaanteriou < MaxMap && lineMap[j].Column[colunaanteriou] != 0)
+                    {
+                        colunaanteriou++;
+                        if (colunaanteriou < MaxMap)
+                        {
+                            lineMap[j].Column[colunaanteriou] = LevelAtual;
+                        }
+
+                    } 
+                    else if (colunaanteriou < MaxMap && colunaanteriou - 1 >= 0 && lineMap[j].Column[colunaanteriou-1] != 0)
+                    {
+                        if (colunaanteriou < MaxMap)
+                        {
+                            lineMap[j].Column[colunaanteriou] = LevelAtual;
+                        }
+                    }
+                    else 
+                    {
+                        if (colunaanteriou != 2)
+                        {
+                            colunaanteriou--;
+                            if (colunaanteriou < MaxMap)
+                            {
+
+                                lineMap[j].Column[colunaanteriou] = LevelAtual;
+                            }
+                        }
+                        else
+                        {
+                            lineMap[j].Column[colunaanteriou] = LevelAtual;
+                        }
+                    }
+                }
+                
+            }
+        }
+        if (NivelDoDegrau + colunaanteriou < MaxMap)
+        {
+            LevelAtual++;
+            RandowForLevel();
+            return;
+        }
+        confim();
+    }
+
     void confim()
     {
         for (int i = 0; i < MaxMap; i++)
-        {
+        {      
             for (int j = 0; j < MaxMap; j++)
             {
-                if (i == 0) break; 
-                Vector2 compar = new Vector2(lineMap[i].Column[j], lineMap[i-1].Column[j]);
 
-                lineMap[i].Column[j] = (int)Mathf.Clamp(compar.x, compar.y - maximoDeIngloinacao, compar.y + maximoDeIngloinacao);
             }
+
         }
+
+        mapping();
     }
     void mapping()
     {
