@@ -6,7 +6,12 @@ public class Randow_Map : MonoBehaviour
 {
     #region variaves 
     [Header("prefeb do terreno")]
-    [SerializeField] GameObject ociano, terra,objPai;
+    [SerializeField] GameObject ociano;
+    [SerializeField] GameObject terra;
+    
+    [SerializeField] GameObject terrainclinada1;
+    [SerializeField] GameObject terrainclinada4;
+    [SerializeField] GameObject objPai;
 
     [Header("angulo do terendo")]
     [SerializeField] int maximoDeIngloinacao;
@@ -136,7 +141,7 @@ public class Randow_Map : MonoBehaviour
 
                 if (Randow <= manter)
                 {
-                    if (lineMap[j].Column[colunaanteriou] != 0)
+                    if (colunaanteriou < MaxMap && lineMap[j].Column[colunaanteriou] != 0)
                     {
                         colunaanteriou++;
                         if (colunaanteriou < MaxMap)
@@ -201,7 +206,6 @@ public class Randow_Map : MonoBehaviour
             RandowForLevel();
             return;
         }
-        Debug.Log(colunaanteriou);
         confim();
     }
 
@@ -256,7 +260,6 @@ public class Randow_Map : MonoBehaviour
                 lineMap[i].Column.RemoveAt(j-1);
             }
         }
-
         for (int i = 0; i < lineMap.Count; i++)
         {
             for (int j = 0; j < MaxMap; j++)
@@ -264,12 +267,66 @@ public class Randow_Map : MonoBehaviour
                 GameObject spawm;
                 if (lineMap[i].Column[j] == 0)
                 {
-                    spawm = Instantiate(ociano,new Vector3(i , lineMap[i].Column[j],j),transform.rotation, objPai.transform);
+                    spawm = Instantiate(ociano,new Vector3(i , lineMap[i].Column[j],j),gameObject.transform.rotation, objPai.transform);
                 }
                 else
                 {
-                    spawm = Instantiate(terra, new Vector3(i, lineMap[i].Column[j],j), transform.rotation, objPai.transform);
+                    if (i-1 > 0 && i+1 < MaxMap && j > 0 && lineMap[i].Column[j] != lineMap[i].Column[j-1] &&
+                        lineMap[i].Column[j] != lineMap[i-1].Column[j] && lineMap[i].Column[j] != lineMap[i + 1].Column[j])
+                    {
+                        spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                    }
+                    else if (i - 1 > 0 && j > 0 && lineMap[i].Column[j] != lineMap[i].Column[j - 1] && lineMap[i].Column[j] != lineMap[i - 1].Column[j])
+                    {
+                        spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                    }
+                    else if (i + 1 < MaxMap && j > 0 && lineMap[i].Column[j] != lineMap[i].Column[j - 1] && lineMap[i].Column[j] != lineMap[i + 1].Column[j])
+                    {
+                        spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                    }
+                    else if (j > 0 && lineMap[i].Column[j] != lineMap[i].Column[j - 1])
+                    {
+                        spawm = Instantiate(terrainclinada4, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                    }
+                    else
+                    {
+                        //Debug.Log(i + " " + lineMap[i + 1].Column[j]);
+                        if (i == 0 && lineMap[i].Column[j] != lineMap[i + 1].Column[j])
+                        {                      
+                            spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                        }
+                        else if (i > 0 && lineMap[i].Column[j] != lineMap[i - 1].Column[j])
+                        {
+                            spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                        }
+                        else
+                        {
+                            if (i + 2 < MaxMap && j > 0 && lineMap[i + 1].Column[j] != lineMap[i + 1].Column[j - 1]
+                                && lineMap[i + 1].Column[j] == lineMap[i + 2].Column[j])
+                            {
+                                //Debug.Log("aa");
+                                spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                            }
+                            else if (i - 1 > 0 && j > 0 && lineMap[i - 1].Column[j] != lineMap[i - 1].Column[j - 1]
+                                && lineMap[i - 1].Column[j] == lineMap[i - 2].Column[j])
+                            {
+
+                                //Debug.Log("bbb");
+                                spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                            }
+                            else
+                            {
+
+                                //Debug.Log("ccc");
+                                spawm = Instantiate(terra, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                            }
+                        }
+                    }
                 }
+                if(i == MaxMap - 1)
+                {
+                }
+                spawm.transform.localRotation = new Quaternion(0, 0, 0, 0);
             }
 
         }
