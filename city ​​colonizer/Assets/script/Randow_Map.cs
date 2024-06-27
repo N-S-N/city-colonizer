@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 
@@ -17,7 +16,6 @@ public class Randow_Map : MonoBehaviour
     [SerializeField] float subir;
     [SerializeField] float decer;
     [SerializeField] int NivelDoDegrau ;
-
 
     [Header("tamanho do Map e lista do map de relevo")]
     [SerializeField] int MaxMap;
@@ -122,11 +120,12 @@ public class Randow_Map : MonoBehaviour
     }
 
     int colunaanteriou = 0;
-
+    int antrerialcoluna;
     void RandowForLevel()
     {
         int RandowLivel = Random.Range(1, NivelDoDegrau);
-        colunaanteriou += RandowLivel;
+        antrerialcoluna += RandowLivel;
+        colunaanteriou = antrerialcoluna;
         if (colunaanteriou < MaxMap)
         {
             lineMap[0].Column[colunaanteriou] = LevelAtual;
@@ -216,16 +215,32 @@ public class Randow_Map : MonoBehaviour
             {
                 if (lineMap[i].Column[j] != 0 && Livel < lineMap[i].Column[j])
                 {
-                    Livel = lineMap[i].Column[j];
+                    if (Livel + 1 < lineMap[i].Column[j])
+                    {
+                        Livel++;
+                        lineMap[i].Column[j] = Livel;
+                    }
+                    else
+                    {
+                        Livel = lineMap[i].Column[j];
+                    }
                 }
                 else
                 {
                     lineMap[i].Column[j] = Livel;
                 }
-
             }    
         }
-        
+        for (int i = 0; i < MaxMap; i++)
+        {
+            for (int j = 0; j < MaxMap; j++)
+            {
+                if (i == 0) break;
+                Vector2 compar = new Vector2(lineMap[i].Column[j], lineMap[i - 1].Column[j]);
+
+                lineMap[i].Column[j] = (int)Mathf.Clamp(compar.x, compar.y - maximoDeIngloinacao, compar.y + maximoDeIngloinacao);
+            }
+        }
         mapping();
     }
     void mapping()
