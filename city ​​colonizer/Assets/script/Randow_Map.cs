@@ -127,11 +127,11 @@ public class Randow_Map : MonoBehaviour
     {
         int RandowLivel = Random.Range(1, NivelDoDegrau);
         colunaanteriou += RandowLivel;
-        if (NivelDoDegrau + colunaanteriou < MaxMap)
+        if (colunaanteriou < MaxMap)
         {
             lineMap[0].Column[colunaanteriou] = LevelAtual;
 
-            for (int j = 0; j < MaxMap - 1; j++)
+            for (int j = 0; j < MaxMap; j++)
             {
                 float Randow = Random.Range(0.000f, 100.000f);
 
@@ -198,27 +198,34 @@ public class Randow_Map : MonoBehaviour
                 }
                 
             }
-        }
-        if (NivelDoDegrau + colunaanteriou < MaxMap)
-        {
             LevelAtual++;
             RandowForLevel();
             return;
         }
+        Debug.Log(colunaanteriou);
         confim();
     }
 
+    int Livel;
     void confim()
     {
         for (int i = 0; i < MaxMap; i++)
-        {      
+        {
+            Livel = lineMap[i].Column[0];
             for (int j = 0; j < MaxMap; j++)
             {
+                if (lineMap[i].Column[j] != 0 && Livel < lineMap[i].Column[j])
+                {
+                    Livel = lineMap[i].Column[j];
+                }
+                else
+                {
+                    lineMap[i].Column[j] = Livel;
+                }
 
-            }
-
+            }    
         }
-
+        
         mapping();
     }
     void mapping()
