@@ -12,6 +12,8 @@ public class Randow_Map : MonoBehaviour
     [SerializeField] GameObject terrainclinada1;
     [SerializeField] GameObject terrainclinada4;
     [SerializeField] GameObject objPai;
+    [Header("Colideer")]
+    [SerializeField] Collider camcoleder;
 
     [Header("angulo do terendo")]
     [SerializeField] int maximoDeIngloinacao;
@@ -38,6 +40,15 @@ public class Randow_Map : MonoBehaviour
         //RandowForLine();
 
         RandowForLevel();
+
+        //ajuste de coleder
+        coliddeer();
+    }
+
+    void coliddeer()
+    {
+        camcoleder.transform.localScale = new Vector3(MaxMap,1,MaxMap);
+        camcoleder.transform.position = new Vector3((MaxMap/2)-0.5f, camcoleder.transform.position.y, (MaxMap/2) -0.5f);
 
     }
     void Line()
