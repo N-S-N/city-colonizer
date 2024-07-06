@@ -25,12 +25,13 @@ public class Randow_Map : MonoBehaviour
     [SerializeField] int NivelDoDegrau ;
 
     [Header("tamanho do Map e lista do map de relevo")]
-    [SerializeField] int MaxMap;
+    [SerializeField]public int MaxMap;
     public List<RandowMapInt> lineMap;
     [SerializeField] TMP_Text texto;
-
+    [SerializeField] Quaternion rotation;
     private int LevelAtual = 1;
 
+    [SerializeField] florest flot;
     #endregion
 
     #region fucion
@@ -279,6 +280,7 @@ public class Randow_Map : MonoBehaviour
                 if (lineMap[i].Column[j] == 0)
                 {
                     spawm = Instantiate(ociano,new Vector3(i , lineMap[i].Column[j],j),gameObject.transform.rotation, objPai.transform);
+                    spawm.transform.localRotation = new Quaternion(0, 0, 0, 0);
                 }
                 else
                 {
@@ -286,18 +288,22 @@ public class Randow_Map : MonoBehaviour
                         lineMap[i].Column[j] != lineMap[i-1].Column[j] && lineMap[i].Column[j] != lineMap[i + 1].Column[j])
                     {
                         spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                        spawm.transform.localRotation = new Quaternion(0, 0, 0, 0);
                     }
                     else if (i - 1 > 0 && j > 0 && lineMap[i].Column[j] != lineMap[i].Column[j - 1] && lineMap[i].Column[j] != lineMap[i - 1].Column[j])
                     {
                         spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                        spawm.transform.localRotation = new Quaternion(0, 0, 0, 0);
                     }
                     else if (i + 1 < MaxMap && j > 0 && lineMap[i].Column[j] != lineMap[i].Column[j - 1] && lineMap[i].Column[j] != lineMap[i + 1].Column[j])
                     {
                         spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                        spawm.transform.localRotation = new Quaternion(0, 0, 0, 0);
                     }
                     else if (j > 0 && lineMap[i].Column[j] != lineMap[i].Column[j - 1])
                     {
                         spawm = Instantiate(terrainclinada4, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                        spawm.transform.localRotation = rotation;
                     }
                     else
                     {
@@ -305,10 +311,12 @@ public class Randow_Map : MonoBehaviour
                         if (i == 0 && lineMap[i].Column[j] != lineMap[i + 1].Column[j])
                         {                      
                             spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                            spawm.transform.localRotation = new Quaternion(0, 0, 0, 0);
                         }
                         else if (i > 0 && lineMap[i].Column[j] != lineMap[i - 1].Column[j])
                         {
                             spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                            spawm.transform.localRotation = new Quaternion(0, 0, 0, 0);
                         }
                         else
                         {
@@ -317,6 +325,7 @@ public class Randow_Map : MonoBehaviour
                             {
                                 //Debug.Log("aa");
                                 spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                                spawm.transform.localRotation = new Quaternion(0, 0, 0, 0);
                             }
                             else if (i - 1 > 0 && j > 0 && lineMap[i - 1].Column[j] != lineMap[i - 1].Column[j - 1]
                                 && lineMap[i - 1].Column[j] == lineMap[i - 2].Column[j])
@@ -324,24 +333,27 @@ public class Randow_Map : MonoBehaviour
 
                                 //Debug.Log("bbb");
                                 spawm = Instantiate(terrainclinada1, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                                spawm.transform.localRotation = new Quaternion(0, 0, 0, 0);
                             }
                             else
                             {
 
                                 //Debug.Log("ccc");
                                 spawm = Instantiate(terra, new Vector3(i, lineMap[i].Column[j], j), gameObject.transform.rotation, objPai.transform);
+                                spawm.transform.localRotation = new Quaternion(0, 0, 0, 0);
                             }
                         }
                     }
+                    
                 }
                 if(i == MaxMap - 1)
                 {
                 }
-                spawm.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                
             }
 
         }
-      
+        flot.vergetacao();
     }
     #endregion
 
