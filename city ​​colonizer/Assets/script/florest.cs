@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class florest : MonoBehaviour
 {
@@ -84,13 +83,13 @@ public class florest : MonoBehaviour
         InvantoryData data = new InvantoryData();
         for (int i = 0;i< ObjOnMapList.Count;i++) 
         {
-            ObjMap itemdata = new ObjMap(ObjOnMapList[i].obj, ObjOnMapList[i].position, ObjOnMapList[i].size, ObjOnMapList[i].prefebcontrucao);
+            ObjMap itemdata = new ObjMap(null, ObjOnMapList[i].position, ObjOnMapList[i].size, ObjOnMapList[i].prefebcontrucao);
             data.slotData.Add(itemdata);
         }
 
-        string jsonData = JsonUtility.ToJson(data,true);
+        string jsonData = JsonUtility.ToJson(data);
 
-        File.WriteAllText("teste.json ", jsonData);
+        File.WriteAllText("construcaoMap.json ", jsonData);
     }
 
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System.IO;
 
 public class Randow_Map : MonoBehaviour
 {
@@ -44,6 +45,9 @@ public class Randow_Map : MonoBehaviour
 
         //ajuste de coleder
         coliddeer();
+
+        //seve
+        saveInventory();
     }
 
     void coliddeer()
@@ -356,7 +360,21 @@ public class Randow_Map : MonoBehaviour
         flot.vergetacao();
     }
     #endregion
+    #region save
+    private void saveInventory()
+    {
+        InvantoryData2 data = new InvantoryData2();
+        for (int i = 0; i < lineMap.Count; i++)
+        {
+            RandowMapInt itemdata = new RandowMapInt(lineMap[i].Column);
+            data.slotData.Add(itemdata);
+        }
 
+        string jsonData = JsonUtility.ToJson(data);
+
+        File.WriteAllText("mapgeneretion.json ", jsonData);
+    }
+    #endregion
 }
 #region list
 
@@ -364,6 +382,15 @@ public class Randow_Map : MonoBehaviour
 public class RandowMapInt
 {
     public List<int> Column;
+    public RandowMapInt(List<int> size)
+    {
+        this.Column = size;
+    }
 }
 
+[System.Serializable]
+public class InvantoryData2
+{
+    public List<RandowMapInt> slotData = new List<RandowMapInt>();
+}
 #endregion
