@@ -1,20 +1,19 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
+
 
 public class camcontrol : MonoBehaviour
 {
     [SerializeField] CinemachineVirtualCamera cam;
+    [SerializeField] Randow_Map map;
     [SerializeField]float velocity;
     [SerializeField] float velocityRotacao;
     Rigidbody rb;
     [SerializeField] private InputAction.CallbackContext iput;
     Vector2 velocityPos = Vector2.zero;
+    float rotgecion;
     void Start()
     {
         transform.position = new Vector3 (10, 50, 10);
@@ -23,19 +22,50 @@ public class camcontrol : MonoBehaviour
 
     private void Update()
     {
+        rotgecion = (int)transform.eulerAngles.y;
+
         Vector2 move = velocityPos;
 
         rb.velocity = transform.TransformDirection(new Vector3(move.x * (cam.m_Lens.FieldOfView / 10) * velocity, 0, move.y * (cam.m_Lens.FieldOfView / 10) * velocity * 5));
+        confander();
+       // transform.position = new Vector3(Math.Clamp(transform.position.x,0, map.MaxMap), transform.position.y, Math.Clamp(transform.position.z, 0, map.MaxMap));
+
+    }
+
+    void confander()
+    {
+        float zom = cam.m_Lens.FieldOfView;
+        
+        if (rotgecion == 0 || rotgecion == 180)//
+        {
+            if (rotgecion == 0)
+            {
+                transform.position = new Vector3(Math.Clamp(transform.position.x, 0 + zom - 1, map.MaxMap - zom+1), transform.position.y, Math.Clamp(transform.position.z, 0 + zom/2 - 23f, map.MaxMap - zom/1.7f - 18f));
+            }
+            else
+            {
+                transform.position = new Vector3(Math.Clamp(transform.position.x, 0 + zom - 1, map.MaxMap - zom + 1), transform.position.y, Math.Clamp(transform.position.z, 0 + zom/2f + 23f, map.MaxMap - zom/2.6f + 18.5f));
+            }
+        }
+        else if(rotgecion == 90 || rotgecion == 270)
+        {
+            if (rotgecion == 90)
+            {
+                transform.position = new Vector3(Math.Clamp(transform.position.x, 0 + (zom/2.1f - 24), map.MaxMap - (zom/2.1f + 23)), transform.position.y, Math.Clamp(transform.position.z, 0 + zom/1.2f  + 1f, map.MaxMap - zom/1.2f  - 1f));
+            }
+            else
+            {
+                transform.position = new Vector3(Math.Clamp(transform.position.x, 0 + (zom / 2.1f + 24), map.MaxMap - (zom / 2.1f - 23)), transform.position.y, Math.Clamp(transform.position.z, 0 + zom / 1.2f - 1f, map.MaxMap - zom / 1.2f + 1f));
+            }
+        }
+        //rotacao
+        //zom
     }
 
     public void move(InputAction.CallbackContext context)
     {
+        
         velocityPos = context.ReadValue<Vector2>();
-
-    }
-
-    void movedirection(Vector2 MOVE)
-    {
 
     }
     public void zom(InputAction.CallbackContext context)
@@ -46,7 +76,7 @@ public class camcontrol : MonoBehaviour
 
     public void rotecion(InputAction.CallbackContext context)
     {
-        transform.eulerAngles += new Vector3(0, (context.ReadValue<Vector2>().y * velocityRotacao)*-1, 0);
+        transform.eulerAngles += new Vector3(0, (context.ReadValue<Vector2>().y * velocityRotacao), 0);
 
     }
 
