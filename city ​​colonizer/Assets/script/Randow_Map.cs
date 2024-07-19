@@ -38,16 +38,23 @@ public class Randow_Map : MonoBehaviour
     #region fucion
     private void Awake()
     {
-        Line();
-        //RandowForLine();
+        if (PlayerPrefs.GetFloat("load") == 0) {
 
-        RandowForLevel();
+            Line();
+            //RandowForLine();
 
-        //ajuste de coleder
-        coliddeer();
+            RandowForLevel();
 
-        //seve
-        saveInventory();
+            //ajuste de coleder
+            coliddeer();
+
+            //seve
+            saveInventory();
+        }
+        else
+        {
+            loud();
+        }
     }
 
     void coliddeer()
@@ -262,6 +269,7 @@ public class Randow_Map : MonoBehaviour
             }
         }
         mapping();
+        flot.vergetacao();
     }
     void mapping()
     {
@@ -357,7 +365,7 @@ public class Randow_Map : MonoBehaviour
             }
 
         }
-        flot.vergetacao();
+
     }
     #endregion
     #region save
@@ -373,6 +381,20 @@ public class Randow_Map : MonoBehaviour
         string jsonData = JsonUtility.ToJson(data);
 
         File.WriteAllText("mapgeneretion.json ", jsonData);
+    }
+
+    void loud()
+    {
+        if (File.Exists("mapgeneretion.json "))
+        {
+            string jsonData = File.ReadAllText("mapgeneretion.json ");
+
+            InvantoryData2 lineMapdafe = JsonUtility.FromJson<InvantoryData2>(jsonData);
+
+            lineMap = lineMapdafe.slotData;
+            MaxMap = lineMap.Count;
+            mapping();
+        }
     }
     #endregion
 }

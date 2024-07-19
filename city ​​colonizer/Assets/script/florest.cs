@@ -20,8 +20,12 @@ public class florest : MonoBehaviour
     {
         mineiro += avore;
         nada += mineiro;
-        //vergetacao();
-    }
+        if (PlayerPrefs.GetFloat("load") == 1)
+        {
+            loud();
+        }
+            //vergetacao();
+        }
 
     public  void vergetacao()
     {
@@ -83,15 +87,41 @@ public class florest : MonoBehaviour
         InvantoryData data = new InvantoryData();
         for (int i = 0;i< ObjOnMapList.Count;i++) 
         {
-            ObjMap itemdata = new ObjMap(null, ObjOnMapList[i].position, ObjOnMapList[i].size, ObjOnMapList[i].prefebcontrucao);
-            data.slotData.Add(itemdata);
+            if (ObjOnMapList[i].prefebcontrucao != -1 && ObjOnMapList[i].obj != null)
+            {
+                ObjMap itemdata = new ObjMap(null, ObjOnMapList[i].position, ObjOnMapList[i].size, ObjOnMapList[i].prefebcontrucao);
+                data.slotData.Add(itemdata);
+            }
         }
 
         string jsonData = JsonUtility.ToJson(data);
 
         File.WriteAllText("construcaoMap.json ", jsonData);
     }
+    void loud()
+    {
+        if (File.Exists("construcaoMap.json "))
+        {
+            string jsonData = File.ReadAllText("construcaoMap.json ");
 
+            InvantoryData lineMapdafe = JsonUtility.FromJson<InvantoryData>(jsonData);
+
+            ObjOnMapList = lineMapdafe.slotData;
+            spawm();
+        }
+    }
+
+    void spawm()
+    {
+        for (int i = 0;i< ObjOnMapList.Count;i++)
+        {
+            if (ObjOnMapList[i].prefebcontrucao != -1) 
+            {
+                GameObject spawm = Instantiate(prevebMap[ObjOnMapList[i].prefebcontrucao].obj, ObjOnMapList[i].position, transform.rotation, pai);
+                ObjOnMapList[i].obj = spawm;
+            }
+        }
+    }
 }
 
 
@@ -103,10 +133,10 @@ public class ObjMap
     public Vector3 position;
     public int size;
     public int prefebcontrucao;
-    public ObjMap(GameObject spawm, Vector3 vector3, int size, int prefebcontrucao)
+    public ObjMap(GameObject obj, Vector3 vecposition, int size, int prefebcontrucao)
     {
-        this.obj = spawm;
-        this.position = vector3;
+        this.obj = obj;
+        this.position = vecposition;
         this.size = size;
         this.prefebcontrucao = prefebcontrucao;
     }

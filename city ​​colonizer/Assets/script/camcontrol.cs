@@ -28,8 +28,7 @@ public class camcontrol : MonoBehaviour
 
         rb.velocity = transform.TransformDirection(new Vector3(move.x * (cam.m_Lens.FieldOfView / 10) * velocity, 0, move.y * (cam.m_Lens.FieldOfView / 10) * velocity * 5));
         confander();
-       // transform.position = new Vector3(Math.Clamp(transform.position.x,0, map.MaxMap), transform.position.y, Math.Clamp(transform.position.z, 0, map.MaxMap));
-
+      
     }
 
     void confander()
