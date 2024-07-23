@@ -38,6 +38,7 @@ public class menuCrontrol : MonoBehaviour
         words[map].name = "new word";
         words[map].iscreat = false;
         words[map].rei = "";
+
         saveInventory();
         seting();
     }
