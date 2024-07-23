@@ -380,14 +380,14 @@ public class Randow_Map : MonoBehaviour
 
         string jsonData = JsonUtility.ToJson(data);
 
-        File.WriteAllText("mapgeneretion.json ", jsonData);
+        File.WriteAllText("mapgeneretion"+ PlayerPrefs.GetFloat("wordNumber")+".json ", jsonData);
     }
 
     void loud()
     {
-        if (File.Exists("mapgeneretion.json "))
+        if (File.Exists("mapgeneretion"+ PlayerPrefs.GetFloat("wordNumber") +".json "))
         {
-            string jsonData = File.ReadAllText("mapgeneretion.json ");
+            string jsonData = File.ReadAllText("mapgeneretion"+ PlayerPrefs.GetFloat("wordNumber") + ".json ");
 
             InvantoryData2 lineMapdafe = JsonUtility.FromJson<InvantoryData2>(jsonData);
 

@@ -96,13 +96,13 @@ public class florest : MonoBehaviour
 
         string jsonData = JsonUtility.ToJson(data);
 
-        File.WriteAllText("construcaoMap.json ", jsonData);
+        File.WriteAllText("construcaoMap"+ PlayerPrefs.GetFloat("wordNumber") + ".json ", jsonData);
     }
     void loud()
     {
-        if (File.Exists("construcaoMap.json "))
+        if (File.Exists("construcaoMap"+ PlayerPrefs.GetFloat("wordNumber") + ".json "))
         {
-            string jsonData = File.ReadAllText("construcaoMap.json ");
+            string jsonData = File.ReadAllText("construcaoMap"+ PlayerPrefs.GetFloat("wordNumber") + ".json ");
 
             InvantoryData lineMapdafe = JsonUtility.FromJson<InvantoryData>(jsonData);
 
