@@ -1,7 +1,9 @@
 using System;
 using Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 
 public class camcontrol : MonoBehaviour
@@ -13,6 +15,11 @@ public class camcontrol : MonoBehaviour
     Rigidbody rb;
     [SerializeField] private InputAction.CallbackContext iput;
     Vector2 velocityPos = Vector2.zero;
+
+    [SerializeField] LayerMask layerOfGrand;
+
+    [SerializeField] float maxdistancioOfCamera;
+
     float rotgecion;
     void Start()
     {
@@ -75,8 +82,48 @@ public class camcontrol : MonoBehaviour
 
     public void rotecion(InputAction.CallbackContext context)
     {
-        transform.eulerAngles += new Vector3(0, (context.ReadValue<Vector2>().y * velocityRotacao), 0);
-
+        if(context.started)
+            confirmetrotecion(context.ReadValue<Vector2>());
     }
+    Vector3 distance;
 
+    void confirmetrotecion(Vector2 cpntedx)
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width/2,Screen.height/2));
+
+        if (Physics.Raycast(ray, out hit, maxdistancioOfCamera, layerOfGrand))
+        {
+            distance = hit.collider.transform.position;
+
+            transform.eulerAngles += new Vector3(0, (cpntedx.y * velocityRotacao), 0);
+            InvokeRepeating("whilehit",0,0.001F);
+        }
+    }
+    Vector3 hitcolader;
+    void whilehit()
+    {
+        hitcolader = Vector3.zero;
+
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+
+        if (Physics.Raycast(ray, out hit, maxdistancioOfCamera, layerOfGrand))
+        {
+            hitcolader = hit.collider.transform.position;
+            hitcolader.y = distance.y;
+
+            if (hitcolader != distance)
+            {
+                float x = 0;
+                float z = 0;
+
+                x = hitcolader.x - distance.x;
+                z = hitcolader.z - distance.z;
+
+                transform.position = new Vector3(transform.position.x - x, transform.position.y, transform.position.z-z);
+                CancelInvoke();
+            }
+        }
+    }
 }

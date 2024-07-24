@@ -1001,7 +1001,11 @@ MonoBehaviour:
   cam: {fileID: 1323170461}
   map: {fileID: 230265171}
   velocity: 7
-  velocityRotacao: 45
+  velocityRotacao: 90
+  layerOfGrand:
+    serializedVersion: 2
+    m_Bits: 8
+  maxdistancioOfCamera: 9999
 --- !u!114 &842693393
 MonoBehaviour:
   m_ObjectHideFlags: 0
