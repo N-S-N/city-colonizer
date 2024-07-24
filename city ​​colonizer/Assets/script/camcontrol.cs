@@ -1,9 +1,7 @@
 using System;
 using Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 
 public class camcontrol : MonoBehaviour
