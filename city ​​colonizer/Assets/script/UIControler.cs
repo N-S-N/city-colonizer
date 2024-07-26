@@ -37,6 +37,7 @@ public class UIControler : MonoBehaviour
     {
         mapObj.saveInventory();
         Time.timeScale = 1.0f;
+        Puase.SetActive(false);
         SceneManager.LoadSceneAsync(0);
     }
 
@@ -44,11 +45,13 @@ public class UIControler : MonoBehaviour
     {
         mapObj.saveInventory();
         Time.timeScale = 1.0f;
+        Puase.SetActive(false);
         Application.Quit();
     }
 
     private void OnApplicationQuit()
     {
         Time.timeScale = 1.0f;
+        Puase.SetActive(false);
     }
 }
