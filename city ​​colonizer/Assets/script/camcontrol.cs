@@ -8,6 +8,7 @@ public class camcontrol : MonoBehaviour
 {
     [SerializeField] CinemachineVirtualCamera cam;
     [SerializeField] Randow_Map map;
+    [SerializeField] float maxZom, MimZom;
     [SerializeField]float velocity;
     [SerializeField] float velocityRotacao;
     Rigidbody rb;
@@ -17,6 +18,8 @@ public class camcontrol : MonoBehaviour
     [SerializeField] LayerMask layerOfGrand;
 
     [SerializeField] float maxdistancioOfCamera;
+
+    Vector2 valormax = Vector2.zero;
 
     float rotgecion;
     void Start()
@@ -39,31 +42,31 @@ public class camcontrol : MonoBehaviour
     void confander()
     {
         float zom = cam.m_Lens.FieldOfView;
-        
+
         if (rotgecion == 0 || rotgecion == 180)//
         {
             if (rotgecion == 0)
             {
-                transform.position = new Vector3(Math.Clamp(transform.position.x, 0 + zom - 1, map.MaxMap - zom+1), transform.position.y, Math.Clamp(transform.position.z, 0 + zom/2 - 23f, map.MaxMap - zom/1.7f - 18f));
+                transform.position = new Vector3(Math.Clamp(transform.position.x, 0 + zom - 1, map.MaxMap - zom + 1), transform.position.y, Math.Clamp(transform.position.z, 0 + zom / 2 - 25f, map.MaxMap - zom / 1.7f - 18f));
             }
             else
             {
-                transform.position = new Vector3(Math.Clamp(transform.position.x, 0 + zom - 1, map.MaxMap - zom + 1), transform.position.y, Math.Clamp(transform.position.z, 0 + zom/2f + 23f, map.MaxMap - zom/2.6f + 18.5f));
+                transform.position = new Vector3(Math.Clamp(transform.position.x, 0 + zom - 1, map.MaxMap - zom + 1), transform.position.y, Math.Clamp(transform.position.z, 0 + zom / 2f + 23f, map.MaxMap - zom / 2.6f + 18.5f));
             }
         }
-        else if(rotgecion == 90 || rotgecion == 270)
+        else if (rotgecion == 90 || rotgecion == 270)
         {
             if (rotgecion == 90)
             {
-                transform.position = new Vector3(Math.Clamp(transform.position.x, 0 + (zom/2.1f - 24), map.MaxMap - (zom/2.1f + 23)), transform.position.y, Math.Clamp(transform.position.z, 0 + zom/1.2f  + 1f, map.MaxMap - zom/1.2f  - 1f));
+                transform.position = new Vector3(Math.Clamp(transform.position.x, 0 + (zom / 2.1f - 24), map.MaxMap - (zom / 2.1f + 23)), transform.position.y, Math.Clamp(transform.position.z, 0 + zom / 1.2f + 1f, map.MaxMap - zom / 1.2f - 1f));
             }
             else
             {
                 transform.position = new Vector3(Math.Clamp(transform.position.x, 0 + (zom / 2.1f + 24), map.MaxMap - (zom / 2.1f - 23)), transform.position.y, Math.Clamp(transform.position.z, 0 + zom / 1.2f - 1f, map.MaxMap - zom / 1.2f + 1f));
             }
         }
-        //rotacao
-        //zom
+    //rotacao
+    //zom
     }
 
     public void move(InputAction.CallbackContext context)
@@ -75,7 +78,7 @@ public class camcontrol : MonoBehaviour
     public void zom(InputAction.CallbackContext context)
     {
         cam.m_Lens.FieldOfView += (context.ReadValue<float>()/100)*-1;
-        cam.m_Lens.FieldOfView = Mathf.Clamp(cam.m_Lens.FieldOfView,5,60);
+        cam.m_Lens.FieldOfView = Mathf.Clamp(cam.m_Lens.FieldOfView, MimZom, maxZom);
     }
 
     public void rotecion(InputAction.CallbackContext context)
@@ -83,8 +86,8 @@ public class camcontrol : MonoBehaviour
         if(context.started)
             confirmetrotecion(context.ReadValue<Vector2>());
     }
-    Vector3 distance;
 
+    Vector3 distance;
     void confirmetrotecion(Vector2 cpntedx)
     {
         RaycastHit hit;
@@ -124,4 +127,5 @@ public class camcontrol : MonoBehaviour
             }
         }
     }
+
 }

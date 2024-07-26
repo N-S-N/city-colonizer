@@ -68,84 +68,6 @@ public class Randow_Map : MonoBehaviour
         subir += manter;
         decer += subir;
     }
-    void RandowForLine()
-    {
-        for (int i = 0; i < MaxMap; i++)//pafez A Primeira linha
-        {
-            for (int j = 0; j < MaxMap; j++)
-            {
-                if (j < 2)//prin]meira linha
-                {
-                    lineMap[i].Column[j] = 0;
-                }
-                else
-                {
-                    float Randow = Random.Range(0.000f, decer);
-                    //Debug.Log(Randow + " " + i);
-                    if (Randow <= manter)
-                    {
-                        lineMap[i].Column[j] = lineMap[i].Column[j - 1];
-                    }
-                    else if (Randow <= subir)
-                    {
-                        lineMap[i].Column[j] = lineMap[i].Column[j - 1] + 1;
-                    }
-                    else if (Randow <= decer)
-                    {
-                        if (lineMap[i].Column[j - 1] == 0)
-                        {
-                            lineMap[i].Column[j] = lineMap[i].Column[j - 1];
-                        }
-                        else
-                        {
-                            lineMap[i].Column[j] = lineMap[i].Column[j - 1] - 1;
-                        }
-                    }
-                }
-            }
-         
-        }
-        confim();
-        //colunas
-        /*
-        for (int i = 0; i < MaxMap; i++)//lionha
-        {
-            for (int j = 1; j < MaxMap; j++)//coluna
-            {
-                if (i < 2)//primeira linha
-                {
-                    lineMap[i].Column[j] = 0;
-                }
-                else
-                {
-                    float Randow = Random.Range(0.000f, 100.000f);
-
-                    if (Randow <= manterColuna)
-                    {
-                        lineMap[j].Column[i] = lineMap[j - 1].Column[i];
-                    }
-                    else if (Randow <= decerColuna)
-                    {
-                        if (lineMap[j - 1].Column[i] == 0)
-                        {
-                            lineMap[j].Column[i] = lineMap[j - 1].Column[i];
-                        }
-                        else
-                        {
-                            lineMap[j].Column[i] = lineMap[j - 1].Column[i] - 1;
-                        }
-                    }
-                    else
-                    {
-                        lineMap[j].Column[i] = lineMap[j - 1].Column[i] + 1;
-                    }
-
-                    confim(i, j);
-                }
-            }
-        }
-        */
-    }
 
     int colunaanteriou = 0;
     int antrerialcoluna;
@@ -368,8 +290,9 @@ public class Randow_Map : MonoBehaviour
 
     }
     #endregion
+
     #region save
-    private void saveInventory()
+    public void saveInventory()
     {
         InvantoryData2 data = new InvantoryData2();
         for (int i = 0; i < lineMap.Count; i++)

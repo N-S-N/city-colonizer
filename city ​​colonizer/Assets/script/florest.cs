@@ -14,8 +14,6 @@ public class florest : MonoBehaviour
     [SerializeField] LayerMask leyer;
     [SerializeField] Transform pai;
 
-
-
     private void Awake()
     {
         mineiro += avore;
@@ -77,12 +75,8 @@ public class florest : MonoBehaviour
         }
 
     }
-    private void OnApplicationQuit()
-    {
-        saveInventory();
-    }
 
-    private void saveInventory()
+    public void saveInventory()
     {
         InvantoryData data = new InvantoryData();
         for (int i = 0;i< ObjOnMapList.Count;i++) 
@@ -123,8 +117,6 @@ public class florest : MonoBehaviour
         }
     }
 }
-
-
 
 [System.Serializable]
 public class ObjMap
