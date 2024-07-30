@@ -35,7 +35,6 @@ public class bluldControler : MonoBehaviour
     {
         if (!isObject) return;
 
-        Debug.Log(Disponivel + " " + Colidindo);
         if (Disponivel && Colidindo)
             podeconstruir();
         else
@@ -59,90 +58,28 @@ public class bluldControler : MonoBehaviour
     }
     void rey()
     {
-        if(Collider.bounds.min.y < 1)
+        if (Collider.bounds.min.y < 1)
         {
             Disponivel = false;
             return;
         }
 
-        if (Collider.bounds.size.x > 1 && Collider.bounds.size.y > 1) {
-            for (int i = 0; i < Collider.bounds.max.x; i++)
-            {
-                for (int j = 0; j < Collider.bounds.max.z; j++)
-                {
-                    RaycastHit hit;
-                    Vector3 pont = new Vector3(Collider.bounds.min.x + i + 0.5f, Collider.bounds.min.y + 0.5f, Collider.bounds.min.z + j + 0.5f);
-                    Debug.DrawRay(pont, Vector3.down, Color.white, 0.6f);
-
-                    if (Physics.Raycast(pont, Vector3.down, out hit, 0.6f, layerOfGrand))
-                    {
-                    }
-                    else
-                    {
-                        Debug.Log("BB");
-                        Disponivel = false;
-                        return;
-                    }
-                }
-            }
-            Disponivel = true;
-        }
-        else if(Collider.bounds.size.x > 1)
+        for (int i = 0; i < Collider.bounds.size.x; i++)
         {
-
-            for (int j = 0; j < Collider.bounds.max.x; j++)
+            for (int j = 0; j < Collider.bounds.size.z; j++)
             {
                 RaycastHit hit;
-                Vector3 pont = new Vector3(Collider.bounds.min.x + j+0.5f, Collider.bounds.min.y + 0.5f, Collider.bounds.min.z + 0.5f);
-                Debug.DrawRay(pont, Vector3.down, Color.white, 0.6f) ;
-
-                if (Physics.Raycast(pont, Vector3.down, out hit, 0.6f, layerOfGrand))
-                {
-                }
-                else
-                {
-                    Debug.Log("BB");
-                    Disponivel = false;
-                    return;
-                }
-            }
-            Disponivel = true;
-        }
-        else if (Collider.bounds.size.z > 1)
-        {
-            for (int j = 0; j < Collider.bounds.max.z; j++)
-            {
-                RaycastHit hit;
-                Vector3 pont = new Vector3(Collider.bounds.min.x + 0.5f, Collider.bounds.min.y + 0.5f, Collider.bounds.min.z + j+0.5f);
+                Vector3 pont = new Vector3(Collider.bounds.min.x + i + 0.5f, Collider.bounds.min.y + 0.5f, Collider.bounds.min.z + j + 0.5f);
                 Debug.DrawRay(pont, Vector3.down, Color.white, 0.6f);
 
-                if (Physics.Raycast(pont, Vector3.down, out hit, 0.6f, layerOfGrand))
-                {
-                }
-                else
+                if (!Physics.Raycast(pont, Vector3.down, out hit, 0.6f, layerOfGrand))
                 {
                     Disponivel = false;
                     return;
                 }
             }
-            Disponivel = true;
         }
-        else
-        {
-            RaycastHit hit;
-            Vector3 pont = new Vector3(Collider.bounds.min.x + 0.5f, Collider.bounds.min.y + 0.5f, Collider.bounds.min.z + 0.5f);
-            Debug.DrawRay(pont, Vector3.down, Color.white, 0.6f);
-
-            if (Physics.Raycast(pont, Vector3.down, out hit, 0.6f, layerOfGrand))
-            {
-                Disponivel = true;
-            }
-            else
-            {
-                Disponivel = false;
-                return;
-            }
-        }
+        Disponivel = true;
     }
 
     private void OnTriggerEnter(Collider other)

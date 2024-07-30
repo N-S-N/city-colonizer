@@ -2479,6 +2479,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 2114894722}
     m_Modifications:
     - target: {fileID: 3855499088629076391, guid: 781d82de7f2bf43438a769e75939a686, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855499088629076391, guid: 781d82de7f2bf43438a769e75939a686, type: 3}
+      propertyPath: m_Size.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855499088629076391, guid: 781d82de7f2bf43438a769e75939a686, type: 3}
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
@@ -2492,6 +2500,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4201793312322914155, guid: 781d82de7f2bf43438a769e75939a686, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4201793312322914155, guid: 781d82de7f2bf43438a769e75939a686, type: 3}
+      propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8268918936237736672, guid: 781d82de7f2bf43438a769e75939a686, type: 3}
