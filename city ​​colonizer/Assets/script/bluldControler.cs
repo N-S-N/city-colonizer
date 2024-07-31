@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class bluldControler : MonoBehaviour
 {
+    #region variaves
     [Header("Tipe")]
     [SerializeField]bool isObject;
 
@@ -21,6 +22,7 @@ public class bluldControler : MonoBehaviour
     Renderer Render;
     Collider Collider;
     bool Disponivel,Colidindo = true;
+    #endregion
 
     #region obj
 
@@ -96,10 +98,12 @@ public class bluldControler : MonoBehaviour
     #endregion
 
     #region UI
+    Collider coll;
     public void openBluld(int i)
     {
         prefeb[i].SetActive(true);
         idex = i;
+        coll = prefeb[idex].GetComponent<Collider>();
         InvokeRepeating("UpdateBluld",0,0.01f);
     }
 
@@ -112,6 +116,12 @@ public class bluldControler : MonoBehaviour
         {
             mausePossintion = hit.transform.position;
             mausePossintion.y = hit.transform.position.y + 1;
+            // center
+            if (coll.bounds.size.x % 2 == 0)
+                mausePossintion.x += 0.5f;
+            if (coll.bounds.size.z % 2 == 0)
+                mausePossintion.z += 0.5f;
+
             prefeb[idex].transform.position = mausePossintion;
         }               
     }
