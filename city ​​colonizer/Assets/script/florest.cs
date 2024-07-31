@@ -10,9 +10,9 @@ public class florest : MonoBehaviour
     [SerializeField] float avore;
     [SerializeField] float mineiro;
     [SerializeField] float nada;
-    [SerializeField] List<ObjMapprefeb> prevebMap = new List<ObjMapprefeb>();
+    [SerializeField] public List<ObjMapprefeb> prevebMap = new List<ObjMapprefeb>();
     [SerializeField] LayerMask leyer;
-    [SerializeField] Transform pai;
+    [SerializeField]public Transform pai;
 
     private void Awake()
     {
@@ -66,14 +66,13 @@ public class florest : MonoBehaviour
         if (Randowvegetacao <= avore)
         {
             GameObject spawm = Instantiate(prevebMap[0].obj, new Vector3(i, map.lineMap[i].Column[j] + 1, j), transform.rotation, pai);
-            ObjOnMapList.Add(new ObjMap(spawm, new Vector3(i, map.lineMap[i].Column[j] + 1, j), prevebMap[0].size,0));
+            ObjOnMapList.Add(new ObjMap(spawm, new Vector3(i, map.lineMap[i].Column[j] + 1, j), spawm.transform.rotation, prevebMap[0].size,0));
         }
         else if (Randowvegetacao <= mineiro)
         {
             GameObject spawm = Instantiate(prevebMap[1].obj, new Vector3(i, map.lineMap[i].Column[j] + 1, j), transform.rotation, pai);
-            ObjOnMapList.Add(new ObjMap(spawm, new Vector3(i, map.lineMap[i].Column[j] + 1, j), prevebMap[1].size,1));
+            ObjOnMapList.Add(new ObjMap(spawm, new Vector3(i, map.lineMap[i].Column[j] + 1, j), spawm.transform.rotation, prevebMap[1].size,1));
         }
-
     }
 
     public void saveInventory()
@@ -83,7 +82,7 @@ public class florest : MonoBehaviour
         {
             if (ObjOnMapList[i].prefebcontrucao != -1 && ObjOnMapList[i].obj != null)
             {
-                ObjMap itemdata = new ObjMap(null, ObjOnMapList[i].position, ObjOnMapList[i].size, ObjOnMapList[i].prefebcontrucao);
+                ObjMap itemdata = new ObjMap(null, ObjOnMapList[i].position, ObjOnMapList[i].Rotecion, ObjOnMapList[i].size, ObjOnMapList[i].prefebcontrucao);
                 data.slotData.Add(itemdata);
             }
         }
@@ -123,10 +122,12 @@ public class ObjMap
 {
     public GameObject obj;
     public Vector3 position;
-    public int size;
+    public Vector3 size;
+    public Quaternion Rotecion;
     public int prefebcontrucao;
-    public ObjMap(GameObject obj, Vector3 vecposition, int size, int prefebcontrucao)
+    public ObjMap(GameObject obj, Vector3 vecposition, Quaternion Rotecion, Vector3 size, int prefebcontrucao)
     {
+        this.Rotecion = Rotecion;
         this.obj = obj;
         this.position = vecposition;
         this.size = size;
@@ -137,7 +138,7 @@ public class ObjMap
 public class ObjMapprefeb
 {
     public GameObject obj;
-    public int size;
+    public Vector3 size;
 }
 
 [System.Serializable]

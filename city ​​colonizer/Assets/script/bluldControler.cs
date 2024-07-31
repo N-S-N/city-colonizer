@@ -10,18 +10,21 @@ public class bluldControler : MonoBehaviour
     [Header("Tipe")]
     [SerializeField]bool isObject;
 
-    [Header("Controler")]   
-    [SerializeField] List<GameObject> prefeb;
-    Vector3 mausePossintion;
-    [SerializeField]float maxdistancioOfCamera;
+    [Header("Controler")]
+    [SerializeField] float maxdistancioOfCamera;
     [SerializeField] LayerMask layerOfGrand;
+    [SerializeField]List<GameObject> prefeb;
+    Vector3 mausePossintion;
     int idex;
 
     [Header("Object")]
-    [SerializeField] GameObject PrejebObj;
+    [SerializeField] int PrejebObj;
     Renderer Render;
     Collider Collider;
-    bool Disponivel,Colidindo = true;
+    bool Disponivel = true;
+    bool Colidindo = true;
+    [SerializeField] florest florest;
+
     #endregion
 
     #region obj
@@ -31,23 +34,45 @@ public class bluldControler : MonoBehaviour
         if (!isObject) return;
         Render = GetComponent<Renderer>();
         Collider = GetComponent<Collider>();
+        
     }
 
     private void Update()
     {
         if (!isObject) return;
-
         if (Disponivel && Colidindo)
             podeconstruir();
         else
             naoPoderConstruir();
-        
+    }
+
+    private void OnEnable()
+    {
+        Invoke("delay", 0.1f);
+    }
+
+    void delay()
+    {
+        Colidindo = true;
     }
 
     void podeconstruir()
     {
         Render.material.color = Color.white;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Invoke("buld", 0.1f);
+        }
     } 
+
+    void buld()
+    {
+        if(!gameObject.activeInHierarchy) return;
+        GameObject spawm = Instantiate(florest.prevebMap[PrejebObj].obj, transform.position, transform.rotation, florest.pai.parent);
+        florest.ObjOnMapList.Add(new ObjMap(spawm, transform.position, spawm.transform.rotation, Collider.bounds.size, PrejebObj));
+    }
+
     void naoPoderConstruir()
     {
         Render.material.color = Color.red;
@@ -58,6 +83,7 @@ public class bluldControler : MonoBehaviour
         if (!isObject) return;
         rey();
     }
+
     void rey()
     {
         if (Collider.bounds.min.y < 1)
@@ -89,6 +115,7 @@ public class bluldControler : MonoBehaviour
         if (!isObject) return;
         Colidindo = false;
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (!isObject) return;
@@ -98,6 +125,7 @@ public class bluldControler : MonoBehaviour
     #endregion
 
     #region UI
+
     Collider coll;
     public void openBluld(int i)
     {

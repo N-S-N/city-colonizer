@@ -847,9 +847,9 @@ MonoBehaviour:
   nada: 97.8
   prevebMap:
   - obj: {fileID: 2259808349133373795, guid: ff09509231fa97d44af9787b6d9116bf, type: 3}
-    size: 2
+    size: {x: 1, y: 2, z: 1}
   - obj: {fileID: 6821429300979933798, guid: 39d4076de710db44f9b8ce565ef2dadb, type: 3}
-    size: 3
+    size: {x: 1, y: 1, z: 1}
   leyer:
     serializedVersion: 2
     m_Bits: 55
@@ -2500,7 +2500,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4201793312322914155, guid: 781d82de7f2bf43438a769e75939a686, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4201793312322914155, guid: 781d82de7f2bf43438a769e75939a686, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -3114,14 +3114,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isObject: 0
-  prefeb:
-  - {fileID: 53126475}
-  - {fileID: 2107413985}
   maxdistancioOfCamera: 8000
   layerOfGrand:
     serializedVersion: 2
     m_Bits: 8
-  PrejebObj: {fileID: 0}
+  prefeb:
+  - {fileID: 53126475}
+  - {fileID: 2107413985}
+  PrejebObj: 0
+  florest: {fileID: 0}
 --- !u!1 &1323170459
 GameObject:
   m_ObjectHideFlags: 0
@@ -3585,12 +3586,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isObject: 1
-  prefeb: []
   maxdistancioOfCamera: 0
   layerOfGrand:
     serializedVersion: 2
     m_Bits: 8
-  PrejebObj: {fileID: 0}
+  prefeb: []
+  PrejebObj: 1
+  florest: {fileID: 230265173}
 --- !u!54 &2107413994
 Rigidbody:
   m_ObjectHideFlags: 0
