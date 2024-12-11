@@ -19,20 +19,26 @@ public class bluldControler : MonoBehaviour
 
     [Header("Object")]
     [SerializeField] int PrejebObj;
-    [SerializeField]Renderer Render;
-    [SerializeField]Collider Collider;
+    Renderer Render;
+    Collider Collider;
     bool Disponivel = true;
     bool Colidindo = true;
     [SerializeField] florest florest;
-    Vector3 positionBluld;
-    Quaternion RotencionBluld;
-    int whoIsColoder = 0;
+
     #endregion
 
     #region obj
+
+    private void Start()
+    {
+        if (!isObject) return;
+        Render = GetComponent<Renderer>();
+        Collider = GetComponent<Collider>();
+        
+    }
+
     private void Update()
     {
-        
         if (!isObject) return;
         if (Disponivel && Colidindo)
             podeconstruir();
@@ -42,16 +48,12 @@ public class bluldControler : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke("delay", 0f);
         Invoke("delay", 0.1f);
-        Invoke("delay", 0.15f);
     }
 
     void delay()
     {
         Colidindo = true;
-        whoIsColoder = 0;
-        //Disponivel = true;
     }
 
     void podeconstruir()
@@ -60,8 +62,6 @@ public class bluldControler : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            positionBluld = transform.position;
-            RotencionBluld = transform.rotation;
             Invoke("buld", 0.1f);
         }
     } 
@@ -69,8 +69,8 @@ public class bluldControler : MonoBehaviour
     void buld()
     {
         if(!gameObject.activeInHierarchy) return;
-        GameObject spawm = Instantiate(florest.prevebMap[PrejebObj].obj, positionBluld, RotencionBluld, florest.pai.parent);
-        florest.ObjOnMapList.Add(new ObjMap(spawm, positionBluld, RotencionBluld, Collider.bounds.size, PrejebObj));
+        GameObject spawm = Instantiate(florest.prevebMap[PrejebObj].obj, transform.position, transform.rotation, florest.pai.parent);
+        florest.ObjOnMapList.Add(new ObjMap(spawm, transform.position, spawm.transform.rotation, Collider.bounds.size, PrejebObj));
     }
 
     void naoPoderConstruir()
@@ -113,16 +113,13 @@ public class bluldControler : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!isObject) return;
-        whoIsColoder++;
         Colidindo = false;
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (!isObject) return;
-        whoIsColoder--;
-        if(whoIsColoder < 1)
-            Colidindo = true;
+        Colidindo = true;
     }
 
     #endregion

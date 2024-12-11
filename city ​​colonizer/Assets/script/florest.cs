@@ -110,7 +110,7 @@ public class florest : MonoBehaviour
         {
             if (ObjOnMapList[i].prefebcontrucao != -1) 
             {
-                GameObject spawm = Instantiate(prevebMap[ObjOnMapList[i].prefebcontrucao].obj, ObjOnMapList[i].position, ObjOnMapList[i].Rotecion, pai);
+                GameObject spawm = Instantiate(prevebMap[ObjOnMapList[i].prefebcontrucao].obj, ObjOnMapList[i].position, transform.rotation, pai);
                 ObjOnMapList[i].obj = spawm;
             }
         }
