@@ -35,7 +35,8 @@ public class Randow_Map : MonoBehaviour
     [SerializeField] florest flot;
     #endregion
 
-    #region fucion
+    #region function
+
     private void Awake()
     {
         if (PlayerPrefs.GetFloat("load") == 0) {
@@ -63,6 +64,7 @@ public class Randow_Map : MonoBehaviour
         camcoleder.transform.position = new Vector3((MaxMap/2)-0.5f, camcoleder.transform.position.y, (MaxMap/2) -0.5f);
 
     }
+
     void Line()
     {
         subir += manter;
@@ -289,6 +291,7 @@ public class Randow_Map : MonoBehaviour
         }
 
     }
+
     #endregion
 
     #region save

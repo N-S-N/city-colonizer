@@ -9,6 +9,7 @@ public class UIControler : MonoBehaviour
     [SerializeField] GameObject Puase;
     [SerializeField] florest mapObj;
 
+    //opem menu or close menu
     public void buttomMenu(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -27,12 +28,14 @@ public class UIControler : MonoBehaviour
         }
     }
 
+    //Press to continue
     public void continuir()
     {
         Time.timeScale = 1.0f;
         Puase.SetActive(false);
     }
 
+    //Press to return to the main menu
     public void menu()
     {
         mapObj.saveInventory();
@@ -41,6 +44,7 @@ public class UIControler : MonoBehaviour
         SceneManager.LoadSceneAsync(0);
     }
 
+    //Squeeze to exit
     public void quit()
     {
         mapObj.saveInventory();
@@ -49,6 +53,7 @@ public class UIControler : MonoBehaviour
         Application.Quit();
     }
 
+    //close game
     private void OnApplicationQuit()
     {
         Time.timeScale = 1.0f;
